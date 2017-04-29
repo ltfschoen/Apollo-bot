@@ -5,6 +5,7 @@ Apollo-bot
     * Team Members https://2017.spaceappschallenge.org/challenges/ideate-and-create/data-concierge/teams/apollo-bot/members
 * **Goal**: Facebook chatbot to automate earth data processing pipelines all the way from looking for datasets to visualising them with graphs
 * **End-Product**: Apollo-bot is a smart AI Chatbot designed to lower the barrier of entry to NASA Earth data. 
+    * Apollo-bot Facebook https://www.facebook.com/Apollo-bot-1797571867226705/
 * **Benefits and Judging Criteria**: 
     * [ ] - **Technical((: 
         * [X] - Cleverly addresses challenge in new way
@@ -56,7 +57,7 @@ Apollo-bot
         * User-friendly technology integrated into Facebook to allow two-way voice interaction across all devices
         * Complete solution ready to use and ready to scale 
     * [ ] - Sustainability
-        * [ ] - Organised using open source Scrum Project Management (issues track usng backlog, ready, in progress, done status) using Waffle.io and linked with GitHub repository accessible to the team and other contributors
+        * [ ] - Organised using open source Scrum Project Management (issues track using backlog, ready, in progress, done status) using Waffle.io and linked with GitHub repository accessible to the team and other contributors
             * https://waffle.io/ltfschoen/Apollo-bot
         * [ ] - Users may create and customise their own custom Wit.ai Flow code and generate new server-side action functions 
         * [ ] - Landing page with .co domain name with hosting and email to register users prior to Facebook app approval
