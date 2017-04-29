@@ -1,0 +1,8 @@
+bottle==0.12.13
+pandas==0.19.2
+Flask==0.12.1
+gunicorn==19.7.1
+pycurl==7.19.3
+requests==2.2.1
+wheel==0.24.0
+wit==4.2.0
