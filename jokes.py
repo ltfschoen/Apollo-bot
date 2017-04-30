@@ -1,0 +1,1 @@
+JOKES = ["jokea", 'jokeb', 'jokec']
