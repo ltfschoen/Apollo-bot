@@ -139,7 +139,7 @@ actions = {
 }
 
 
-def create_client(send_function, access_token="WIMP5FOOS5AXRPQG3PNVJFEOUBH5WHZH"):
+def create_client(send_function, access_token="MVFXFYNSGLXU2QRSU5YIZU7DA4LRMAS3"):
     actions['send'] = send_function
     return Wit(access_token=access_token, actions=actions)
 
