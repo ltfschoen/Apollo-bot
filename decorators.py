@@ -31,7 +31,7 @@ def random_joke(function):
         if 'humour_percent' not in context.keys():
             context['humour_percent'] = 0
         if randint(0,1000) / 1000 < context['humour_percent']:
-            context['joke'] = ' \n ' + JOKES[randint() % len(JOKES)]
+            context['joke'] = ' \n ' + JOKES[randint(0,1000) % len(JOKES)]
         else:
             context['joke'] = ""
         return context
