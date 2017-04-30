@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 from jokes import JOKES
 from random import randint
-from Visualisation import Data
+#from Visualisation import Data
 from decorators import *
 
 # class Data:
@@ -95,9 +95,9 @@ def get_data(request):
     time = entities['time'][0]['value']
     context = request['context']
     # ret_str = str(Data(location, time).dataset)
-    d = Data(location, time)
+    #d = Data(location, time)
     img_name = filename = "image/{0}{1}.png".format(location, time)
-    d.graph(filename=img_name)
+    #d.graph(filename=img_name)
     # if 'humour_percent' not in context:
     #     context['humour_percent'] = 0
     # if randint() < context['humour_percent']:
