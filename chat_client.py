@@ -4,30 +4,29 @@ import pandas as pd
 import requests
 from jokes import JOKES
 from random import randint
-
+from Visualisation import Data
 from decorators import *
 
-
-class Data:
-    """ Load DATA """
-
-    def __init__(self, location, time):
-
-        self.DATASET_REMOTE = "https://firms.modaps.eosdis.nasa.gov/active_fire/c6/text/MODIS_C6_{0}_{1}h.csv".format(
-            location, time)
-        self.dataset = self.get_data(None)
-
-    def get_data(self, num_rows):
-        """ Load from remote endpoint """
-        try:
-            def exists(path):
-                r = requests.head(path)
-                return r.status_code == requests.codes.ok
-
-            if exists(self.DATASET_REMOTE):
-                return pd.read_csv(self.DATASET_REMOTE, nrows=num_rows)
-        except Exception as e:
-            print(e.errno)
+# class Data:
+#     """ Load DATA """
+#
+#     def __init__(self, location, time):
+#
+#         self.DATASET_REMOTE = "https://firms.modaps.eosdis.nasa.gov/active_fire/c6/text/MODIS_C6_{0}_{1}h.csv".format(
+#             location, time)
+#         self.dataset = self.get_data(None)
+#
+#     def get_data(self, num_rows):
+#         """ Load from remote endpoint """
+#         try:
+#             def exists(path):
+#                 r = requests.head(path)
+#                 return r.status_code == requests.codes.ok
+#
+#             if exists(self.DATASET_REMOTE):
+#                 return pd.read_csv(self.DATASET_REMOTE, nrows=num_rows)
+#         except Exception as e:
+#             print(e.errno)
 
 
 access_token = "L3WEHB6WLKM567B4BW4XJMQRS43BCZLR"
@@ -80,7 +79,7 @@ def send(request, response):
 
 def select_joke(request):
     context = request['context']
-    context['joke'] = JOKES[randint(0,1000) % len(JOKES)]
+    context['joke'] = JOKES[randint(0, 1000) % len(JOKES)]
     return context
 
 
@@ -95,13 +94,17 @@ def get_data(request):
     location = entities['location'][0]['value']
     time = entities['time'][0]['value']
     context = request['context']
-    ret_str = str(Data(location, time).dataset)
+    # ret_str = str(Data(location, time).dataset)
+    d = Data(location, time)
+    img_name = filename = "image/{0}{1}.png".format(location, time)
+    d.graph(filename=img_name)
     # if 'humour_percent' not in context:
     #     context['humour_percent'] = 0
     # if randint() < context['humour_percent']:
     #     ret_str += ' \n ' + all_jokes['cat']
-    context['ret'] = ret_str
+    context['ret'] = img_name
     return context  # str(data.dataset)
+
 
 @random_joke
 @necessary_entities(['percent'])
@@ -113,7 +116,7 @@ def set_humour(request):
     #     return context
     humour_percent = entities['percent'][0]['value']
     context = request['context']
-    context['humour_percent'] = float(humour_percent)
+    context['humour_percent'] = float(humour_percent / 100)
     return context
 
 
@@ -125,6 +128,7 @@ def to_voice(text):
 
 actions = {
     'send': send,
+    None: select_joke,
     # 'merge': merge,
     'select-joke': select_joke,
     'getdata': get_data,

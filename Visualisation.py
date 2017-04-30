@@ -53,19 +53,19 @@ class Data:
         ax.scatter(x, y, z, c=density)
         ax.set(xlabel='Latitude', ylabel='Longitude', zlabel='Brightness')
         ax.set_title("MODIS Satellite Global Fire Distribution [24 Hours]", fontsize=15)
-        plt.show()
+        # plt.show()
         fig.savefig(filename)
 
 
 # In[21]:
 
-d = Data("Global", "24")
-print(d)
-
-
-# In[18]:
-
-d.graph()
+# d = Data("Global", "24")
+# print(d)
+#
+#
+# # In[18]:
+#
+# d.graph()
 
 
 # In[ ]:
