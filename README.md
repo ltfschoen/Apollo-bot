@@ -18,6 +18,8 @@
 
 ![alt tag](https://raw.githubusercontent.com/ltfschoen/Apollo-bot/master/screenshots/screenshot.png)
 
+    * [Apollo-bot Presentation Slides](https://raw.githubusercontent.com/ltfschoen/Apollo-bot/master/presentation/Apollo-bot_Presentation.pdf)
+
 # Chapter 1 - Milestones <a id="chapter-1"></a>
 
 * **Benefits and Judging Criteria**: 
@@ -37,8 +39,8 @@
         * [ ] - Solution with most potential to improve life on Earth or in the universe.
     * [ ] - **Most Inspirational**: 
         * [ ] - Solution that captures our hearts.
-    * [X] - **People’s Choice**: 
-        * [X] - Solution voted for the most by Earthlings on social media.
+    * [ ] - **People’s Choice**: 
+        * [ ] - Solution voted for the most by Earthlings on social media.
     * [ ] - **Best use of data**:
         * [ ] - Solution that best makes space data accessible, or leverages it to a unique application
     * [ ] - Best use of hardware: The solution that exemplifies the most innovative use of hardware.
