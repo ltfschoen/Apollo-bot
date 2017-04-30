@@ -116,7 +116,7 @@ def set_humour(request):
     #     return context
     humour_percent = entities['percent'][0]['value']
     context = request['context']
-    context['humour_percent'] = float(humour_percent / 100)
+    context['humour_percent'] = float(humour_percent) / 100.0
     return context
 
 
@@ -128,11 +128,11 @@ def to_voice(text):
 
 actions = {
     'send': send,
-    None: select_joke,
     # 'merge': merge,
     'select-joke': select_joke,
     'getdata': get_data,
     'set_humour': set_humour,
+    #None: select_joke,
 }
 
 
@@ -141,7 +141,8 @@ def create_client(send_function, access_token="L3WEHB6WLKM567B4BW4XJMQRS43BCZLR"
     return Wit(access_token=access_token, actions=actions)
 
 
-client = create_client(send)
+# client = create_client(send)
+client = Wit(access_token=access_token, actions=actions)
 client.interactive()
 
 # client = Wit(access_token=access_token, actions=actions)

@@ -48,7 +48,7 @@ class Data:
         idx = density.argsort()
         x, y, z, density = x[idx], y[idx], z[idx], density[idx]
 
-        fig = plt.figure()
+        fig = plt.figure(frameon=False)
         ax = fig.add_subplot(111, projection='3d')
         ax.scatter(x, y, z, c=density)
         ax.set(xlabel='Latitude', ylabel='Longitude', zlabel='Brightness')
