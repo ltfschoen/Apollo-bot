@@ -1,13 +1,24 @@
-Apollo-bot
-====================
+# Apollo-bot
+## Project: Smart AI Chatbot designed to lower the barrier of entry to NASA Earth data
+
+# Table of Contents
+
+  * [Chapter 0 - About](#chapter-0)
+  * [Chapter 1 - Benefits and Milestones](#chapter-1)
+  * [Chapter 2 - Setup for Contributors](#chapter-2)
+
+# Chapter 0 - About <a id="chapter-0"></a>
 
 * **Category Chosen**: Data Concierge https://2017.spaceappschallenge.org/challenges/ideate-and-create/data-concierge/details
     * Team Members https://2017.spaceappschallenge.org/challenges/ideate-and-create/data-concierge/teams/apollo-bot/members
 * **Goal**: Facebook chatbot to automate earth data processing pipelines all the way from looking for datasets to visualising them with graphs
 * **End-Product**: Apollo-bot is a smart AI Chatbot designed to lower the barrier of entry to NASA Earth data. 
-    * Apollo-bot Facebook https://www.facebook.com/Apollo-bot-1797571867226705/
+    * Apollo-bot Facebook App https://www.facebook.com/Apollo-bot-1797571867226705/
+
+# Chapter 1 - Milestones <a id="chapter-1"></a>
+
 * **Benefits and Judging Criteria**: 
-    * [ ] - **Technical((: 
+    * [ ] - **Technical**: 
         * [X] - Cleverly addresses challenge in new way
         * [ ] - GitHub file includes code 
         * [X] - Level of project maturity and game-changing potential
@@ -80,3 +91,11 @@ Apollo-bot
     * [ ] - Update Team Project Page on Space Apps Sydney 2017 website
     * [ ] - Upload work to GitHub repository
     * [ ] - Submit project at to Space Apps Project Page
+
+# Chapter 2 - Setup for Contributors <a id="chapter-2"></a>
+
+* Setup
+    * Deployment
+        * Add heroku-buildpack-apt Buildpack to Heroku
+
+
