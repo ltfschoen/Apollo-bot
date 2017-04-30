@@ -95,7 +95,7 @@ def get_data(request):
     time = entities['time'][0]['value']
     context = request['context']
     # ret_str = str(Data(location, time).dataset)
-    #d = Data(location, time)
+    #d = Data(location.replace(' ', '_'), time)
     img_name = filename = "image/{0}{1}.png".format(location, time)
     #d.graph(filename=img_name)
     # if 'humour_percent' not in context:
@@ -125,6 +125,8 @@ def to_voice(text):
     call(["espeak", "-v", text + ".wav", text])
     return text + ".wav"
 
+def clean(request):
+    return {}
 
 actions = {
     'send': send,
@@ -132,11 +134,12 @@ actions = {
     'select-joke': select_joke,
     'getdata': get_data,
     'set_humour': set_humour,
+    'clean': clean
     #None: select_joke,
 }
 
 
-def create_client(send_function, access_token="L3WEHB6WLKM567B4BW4XJMQRS43BCZLR"):
+def create_client(send_function, access_token="JJPY67NGOPQOLALQWU25MMZIXF4I7ZIZ"):
     actions['send'] = send_function
     return Wit(access_token=access_token, actions=actions)
 
