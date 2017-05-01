@@ -1,36 +1,11 @@
 from random import shuffle
 from wit import Wit
-import pandas as pd
-import requests
 from jokes import JOKES
 from random import randint
-#from Visualisation import Data
+from Visualisation import Data
 from decorators import *
-
-# class Data:
-#     """ Load DATA """
-#
-#     def __init__(self, location, time):
-#
-#         self.DATASET_REMOTE = "https://firms.modaps.eosdis.nasa.gov/active_fire/c6/text/MODIS_C6_{0}_{1}h.csv".format(
-#             location, time)
-#         self.dataset = self.get_data(None)
-#
-#     def get_data(self, num_rows):
-#         """ Load from remote endpoint """
-#         try:
-#             def exists(path):
-#                 r = requests.head(path)
-#                 return r.status_code == requests.codes.ok
-#
-#             if exists(self.DATASET_REMOTE):
-#                 return pd.read_csv(self.DATASET_REMOTE, nrows=num_rows)
-#         except Exception as e:
-#             print(e.errno)
-
-
-access_token = "L3WEHB6WLKM567B4BW4XJMQRS43BCZLR"
-
+import json
+import tokens
 
 # all_jokes = {
 #     'cat': [
@@ -57,6 +32,7 @@ access_token = "L3WEHB6WLKM567B4BW4XJMQRS43BCZLR"
 #
 
 def send(request, response):
+    print("Called send action in chat_client.py with response: %r" % (response))
     print(response['text'])
 
 
@@ -78,14 +54,17 @@ def send(request, response):
 
 
 def select_joke(request):
+    print("Called select_joke action with: %r" % (request))
     context = request['context']
     context['joke'] = JOKES[randint(0, 1000) % len(JOKES)]
+    print("Within select_joke returning context with joke: %r" % (context['joke']))
     return context
 
 
 @random_joke
 @necessary_entities(['location', 'time'])
 def get_data(request):
+    print("Called get_data action with: %r" % (request))
     entities = request['entities']  # client.message(request['text'])['entities']
     # if 'location' not in entities or 'time' not in entities:
     #     context = request['context']
@@ -103,13 +82,16 @@ def get_data(request):
     # if randint() < context['humour_percent']:
     #     ret_str += ' \n ' + all_jokes['cat']
     context['ret'] = img_name
+    print("Within get_data returning context with img_name: %r" % (context['ret']))
     return context  # str(data.dataset)
 
 
 @random_joke
 @necessary_entities(['percent'])
 def set_humour(request):
+    print("Called set_humour action with: %r" % (request))
     entities = client.message(request['text'])['entities']
+    print("Within set_humour with client.message(): %r" % (client.message()))
     # if 'percent' not in entities:
     #     context = request['context']
     #     context['ret'] = 'I don\'t understand, please type help for more option'
@@ -117,13 +99,8 @@ def set_humour(request):
     humour_percent = entities['percent'][0]['value']
     context = request['context']
     context['humour_percent'] = float(humour_percent) / 100.0
+    rint("Within set_humour returning context with humour_percent: %r" % (context['humour_percent']))
     return context
-
-
-def to_voice(text):
-    from subprocess import call
-    call(["espeak", "-v", text + ".wav", text])
-    return text + ".wav"
 
 def clean(request):
     return {}
@@ -131,23 +108,28 @@ def clean(request):
 actions = {
     'send': send,
     # 'merge': merge,
-    'select-joke': select_joke,
+    'select_joke': select_joke,
     'getdata': get_data,
     'set_humour': set_humour,
     'clean': clean
     #None: select_joke,
 }
 
+# Setup Wit Client
+client = Wit(access_token=tokens.WIT_APP_TOKEN, actions=actions)
+client.interactive()
 
-def create_client(send_function, access_token="MVFXFYNSGLXU2QRSU5YIZU7DA4LRMAS3"):
+def create_client(send_function, access_token=tokens.WIT_APP_TOKEN):
+    """
+    Generates Wit Client. Called from apollobot.py
+    """
+    print("Generated Wit Client with 'send' function provided: %r" % (send_function))
     actions['send'] = send_function
     return Wit(access_token=access_token, actions=actions)
 
+client = create_client(send)
+print("Generated Interactive Wit Client with 'send' function provided: %r" % (send))
 
-# client = create_client(send)
-client = Wit(access_token=access_token, actions=actions)
-client.interactive()
-
-# client = Wit(access_token=access_token, actions=actions)
+# client = Wit(access_token=tokens.WIT_APP_TOKEN, actions=actions)
 # #t = client.run_actions("16627312704215","hi")
 # client.interactive()

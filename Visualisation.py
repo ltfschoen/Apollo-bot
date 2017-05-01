@@ -1,17 +1,15 @@
-
-# coding: utf-8
-
-# In[16]:
-
-import numpy as np
-import seaborn as sns
-import scipy.ndimage
-import pandas as pd
 import requests
-import numpy as np
-from scipy import stats
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D 
+import pandas as pd
+# import numpy as np
+# import seaborn as sns
+# import scipy.ndimage
+# from scipy import stats
+# import Tkinter as tk # Python 2
+# import tkinter as tk # Python 3
+# import matplotlib
+# matplotlib.use('Agg') # Set Matplotlib backend to use Agg instead of Tk for use on Heroku
+# import matplotlib.pyplot as plt
+# from mpl_toolkits.mplot3d import Axes3D
 
 class Data:
     """ Load DATA """
@@ -31,49 +29,38 @@ class Data:
             if exists(self.DATASET_REMOTE):
                 return pd.read_csv(self.DATASET_REMOTE, nrows=num_rows)
         except Exception as e:
-            print("")
+            print("Exception retrieving data: ", e)
 
-    def graph(self, location = "Global", time = "24", filename = "output.png"):
-        data = Data(location, time)
-        feature_columns = ['latitude', 'longitude', 'brightness']
-        X  = data.get_data(100)[feature_columns]
-        sns.set()
-        mu, sigma = 0, 0.1 
-        x = X['latitude']
-        y = X['longitude']
-        z = X['brightness']
-        xyz = np.vstack([x,y,z])
-        density = stats.gaussian_kde(xyz)(xyz) 
+    # def graph(self, location = "Global", time = "24", filename = "output.png"):
+    #     data = Data(location, time)
+    #     feature_columns = ['latitude', 'longitude', 'brightness']
+    #     X  = data.get_data(100)[feature_columns]
+    #     # X.head()
+    #     sns.set()
+    #
+    #     mu, sigma = 0, 0.1
+    #     x = X['latitude']
+    #     y = X['longitude']
+    #     z = X['brightness']
+    #
+    #     xyz = np.vstack([x,y,z])
+    #     density = stats.gaussian_kde(xyz)(xyz)
+    #
+    #     idx = density.argsort()
+    #     x, y, z, density = x[idx], y[idx], z[idx], density[idx]
+    #
+    #     fig = plt.figure(frameon=False)
+    #     ax = fig.add_subplot(111, projection='3d')
+    #     ax.scatter(x, y, z, c=density)
+    #     ax.set(xlabel='Latitude', ylabel='Longitude', zlabel='Brightness')
+    #     ax.set_title("MODIS Satellite Global Fire Distribution [24 Hours]", fontsize=15)
+    #     plt.show()
+    #     fig.savefig(filename)
 
-        idx = density.argsort()
-        x, y, z, density = x[idx], y[idx], z[idx], density[idx]
-
-        fig = plt.figure(frameon=False)
-        ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(x, y, z, c=density)
-        ax.set(xlabel='Latitude', ylabel='Longitude', zlabel='Brightness')
-        ax.set_title("MODIS Satellite Global Fire Distribution [24 Hours]", fontsize=15)
-        # plt.show()
-        fig.savefig(filename)
-
-
-# In[21]:
-
-# d = Data("Global", "24")
-# print(d)
-#
-#
-# # In[18]:
-#
+d = Data("Global", "24")
+# print(d.dataset)
 # d.graph()
 
-
-# In[ ]:
-
-
-
-
-# In[ ]:
 
 
 
