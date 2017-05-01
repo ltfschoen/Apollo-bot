@@ -13,7 +13,11 @@
     * Team Members https://2017.spaceappschallenge.org/challenges/ideate-and-create/data-concierge/teams/apollo-bot/members
 * **Goal**: Facebook chatbot to automate earth data processing pipelines all the way from looking for datasets to visualising them with graphs
 * **End-Product**: Apollo-bot is a smart AI Chatbot designed to lower the barrier of entry to NASA Earth data. 
-    * Apollo-bot Facebook App https://www.facebook.com/Apollo-bot-1797571867226705/
+    * Apollo-bot Facebook Messenger App UI https://www.facebook.com/Apollo-bot-1797571867226705/
+        * Go to "About". Click "Send Message"
+    * Apollo-bot Facebook Messenger Developer Admin https://developers.facebook.com/apps/154496488416785/messenger/
+        * Token (Page Access)
+        * Webhook
     * Apollo-bot flow diagram of User-Bot conversation
 
 ![alt tag](https://raw.githubusercontent.com/ltfschoen/Apollo-bot/master/screenshots/screenshot.png)
