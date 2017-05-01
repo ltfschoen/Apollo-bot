@@ -1,1 +1,1 @@
-JOKES = ["jokea", 'jokeb', 'jokec']
+JOKES = ["What time do astronauts eat?", 'Why did the astronaut retire?', 'What do you call a tick on the moon?']

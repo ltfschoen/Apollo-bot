@@ -18,6 +18,10 @@
     * Apollo-bot Facebook Messenger Developer Admin https://developers.facebook.com/apps/154496488416785/messenger/
         * Token (Page Access)
         * Webhook
+    * Apollo-bot Facebook Chat Demo
+
+![alt tag](https://raw.githubusercontent.com/ltfschoen/Apollo-bot/master/screenshots/screenshot2.png)
+
     * Apollo-bot flow diagram of User-Bot conversation
 
 ![alt tag](https://raw.githubusercontent.com/ltfschoen/Apollo-bot/master/screenshots/screenshot.png)
@@ -106,7 +110,111 @@
 # Chapter 2 - Setup for Contributors <a id="chapter-2"></a>
 
 * Setup
+    * Show Project dependencies. Install dependencies
+        ```
+        pip freeze > requirements.txt
+        pip install -r requirements.txt
+        ```
+
+    * Editor IDE
+        * Recognise .py files on Mac
+            * Press `CMD + ,`, go to Editor > File Types, Add *.py
+        * Fix any errors
+            * Go to File > Project Structure, Click "Problems", Click "Fix"
+
+    * Facebook Messenger Config
+        * Create Facebook Page for the Apollo-bot https://www.facebook.com/Apollo-bot-1797571867226705/
+        * Login to Apollo-bot app at https://developers.facebook.com/apps/154496488416785
+        * Go to Products > Messenger > Settings
+            * Go to "Token Generation", Select "Apollo-bot" from drop-down associated with its Facebook Page
+            * Copy the generated Page Access Token and check it matches with value in .env file for key FACEBOOK_MESSENGER_PAGE_TOKEN
+            * Go to "Webhooks"
+                * Click "Edit events", ensure "messaging", "message_deliveries", "messaging_optins" and "messaging_postbacks" is selected.
+                * Click drop-down to subscribethe Webhook to page events and select "Apollo-bot"
+        * Go to Products > Webhooks
+            * Click "Edit Page Subscription"
+                * Replace with Apollo-bot production server URL
+                    * i.e. Jarryd's https://apollobot3.herokuapp.com/
+                    * OR Lukes https://apollo-bot-server.herokuapp.com
+                        * `show me my image` returns pre-made seaborn plot (image) in response to user message.
+                        It does this by returning the image when the server detects the text matches `show me my image` (not due to Wit.ai story)
+                        * `show me a joke` returns a joke (due to Wit.ai story)
+                    * OR Ngrok address (see pre-deployment testing)
+                * Add Verify Token of "facebook_verify_token", and ensure this value matches in apollobot.py comparison of "hub.verify_token"
+
+    * Pre-Deployment Testing
+        * Download https://ngrok.com/
+        * Run Flask app using local server at http://127.0.0.1:5000/
+            ```
+            export FLASK_APP=apollobot.py
+            flask run
+            # python -m flask run
+            ```
+
+
     * Deployment
-        * Add heroku-buildpack-apt Buildpack to Heroku
+        ```
+        heroku login
+
+        # Create Heroku App at https://apollo-bot-server.herokuapp.com/
+        # Add Python Buildpack https://github.com/heroku/heroku-buildpack-python
+        # Add Buildpack to allow a list of apt packages to be installed from Aptfile
+        # Show list of installed Buildpacks
+        # Note: Order of execution of the Buildpack is given by the index argument
+        heroku apps:create apollo-bot-server --stack cedar --region us; \
+        heroku buildpacks:set --index 1 heroku/python; \
+        heroku buildpacks:set --index 2 https://github.com/heroku/heroku-buildpack-apt; \
+        heroku buildpacks;
 
 
+        # Add .env keys and values to Heroku config vars
+        heroku config:add ROOT_URL=https://apollo-bot-server.herokuapp.com; \
+        heroku config:set FACEBOOK_MESSENGER_PAGE_TOKEN=""; \
+        heroku config:set WIT_AI_APP_SERVER_ACCESS_TOKEN=""; \
+        heroku config:set FACEBOOK_MESSENGER_VERIFY_TOKEN="";
+
+        # Add and show Heroku App config
+        heroku config --app apollo-bot-server --json
+
+        # Show tracked remote repositories
+        git remote -v
+
+        # Push latest changes (from relevant branch)
+        git push heroku master
+
+        # Or for pushing specific local branch to Heroku master
+        git push -f heroku yourbranch:master
+
+        # Restart server if necessary
+        heroku restart
+
+        # Watch Heroku production server logs
+        heroku logs --tail --app apollo-bot-server
+
+        # Login to Heroku production server for debugging
+        heroku run bash --app apollo-bot-server
+
+        # Update the Callback URL and Verify Token in Webhooks on Facebook Developer (if not set yet)
+        ```
+
+    * Other options (NOT WORKING)
+        * Gunicorn local server
+            * Go to File > Other Settings > Default Settings > Build, Execution, Deployment > Python Debugger
+                * Select the checkbox "gevent compatible debugging"
+
+            * Go to "Edit Configurations", Create new Python config and call it "gunicorn".
+                * Add "Script" /Users/<username>/miniconda3/bin/gunicorn
+                * Add "Script Parameters" of "-b 127.0.0.1:5000 apollobot:app", where the host and port matches the server address defined in apollobot.py, and where "apollobot" refers to primary starting script apollobot.py, and where "app" is what to refer to it as. This will for gunicorn to bind to all IPs on your machine on port 5000
+                * Set the "Working Directory" to /Users/<username>/code/Apollo-bot instead of /Users/Ls/miniconda3/bin
+
+
+        * Ngrok tunnel
+            * Ensure that Flask web server is running at 127.0.0.1:5000
+            * Exposing port to public internet with `./ngrok http 5000`. The "Forwarding" address points to 127.0.0.1:5000.
+            * Go to the "Forwarding" address (i.e. https://[generated_id].ngrok.com)
+            * Go to http://localhost:4040 to see detailed request logging for all traffic going through your ngrok url
+            * Note: Does not allow save when add to Webhooks in Facebook Messenger "Webhooks" setup along with Verify Token.
+            Maybe due to Webhooks must have a valid SSL certificate signed by a certificate authority
+
+    * TODO
+        * Remove `debug=True` from `app.run` when no more errors
